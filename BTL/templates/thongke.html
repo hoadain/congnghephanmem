@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thống kê tìm kiếm</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f0fff0;
+            margin: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin: auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        th {
+            background: #a0d8a0;
+        }
+        h2 {
+            text-align: center;
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <h2>Thống kê từ khóa tìm kiếm</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Từ khóa</th>
+                <th>Số lượt tìm</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row.tukhoa }}</td>
+                <td>{{ row.solan }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

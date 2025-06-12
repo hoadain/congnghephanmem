@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quản lý đánh giá tuyến xe buýt</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9fdfb;
+      padding: 40px;
+      color: #333;
+    }
+
+    h2, h3 {
+      color: #2e7d32;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    select, input, textarea, button {
+      margin: 8px 0;
+      padding: 10px;
+      width: 100%;
+      max-width: 500px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.15);
+    }
+
+    th, td {
+      border: 1px solid #e0e0e0;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .action-btn {
+      margin-right: 5px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .edit-btn {
+      background-color: #ffeb3b;
+      color: #333;
+    }
+
+    .edit-btn:hover {
+      background-color: #fdd835;
+    }
+
+    .delete-btn {
+      background-color: #ef5350;
+      color: white;
+    }
+
+    .delete-btn:hover {
+      background-color: #e53935;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Quản lý đánh giá tuyến xe buýt</h2>
+
+    <label for="routeSelect">Chọn tuyến xe:</label>
+    <select id="routeSelect">
+      <option value="">-- Chọn tuyến --</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <h3>Thêm đánh giá mới</h3>
+    <form id="addRatingForm">
+      <input type="text" id="username" placeholder="Tên người dùng" required />
+      <input type="number" id="score" placeholder="Điểm (1-5)" min="1" max="5" required />
+      <textarea id="comment" placeholder="Nhận xét..." required></textarea>
+      <button type="submit">Gửi đánh giá</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3>Danh sách đánh giá</h3>
+    <table id="ratingsTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Người dùng</th>
+          <th>Điểm</th>
+          <th>Nhận xét</th>
+          <th>Thời gian</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    let selectedRoute = "";
+
+    // Tải danh sách tuyến
+    fetch("/api/routes")
+      .then(res => res.json())
+      .then(data => {
+        const select = document.getElementById("routeSelect");
+        data.forEach(route => {
+          const opt = document.createElement("option");
+          opt.value = route.route_id;
+          opt.textContent = route.name;
+          select.appendChild(opt);
+        });
+      });
+
+    document.getElementById("routeSelect").addEventListener("change", () => {
+      selectedRoute = document.getElementById("routeSelect").value;
+      if (selectedRoute) loadRatings(selectedRoute);
+    });
+
+    // Load danh sách đánh giá
+    function loadRatings(routeId) {
+      fetch(`/api/route/${routeId}/ratings`)
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.querySelector("#ratingsTable tbody");
+          tbody.innerHTML = "";
+
+          data.forEach(r => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${r.id}</td>
+              <td>${r.username}</td>
+              <td>${r.diem}</td>
+              <td>${r.nhanxet}</td>
+              <td>${r.thoigian}</td>
+              <td>
+                <button class="action-btn edit-btn" onclick="editRating(${r.id}, '${r.username}', ${r.diem}, \`${r.nhanxet.replace(/`/g, "\\`")}\`)">Sửa</button>
+                <button class="action-btn delete-btn" onclick="deleteRating(${r.id})">Xóa</button>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+        });
+    }
+
+    // Thêm đánh giá
+    document.getElementById("addRatingForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!selectedRoute) return alert("Vui lòng chọn tuyến.");
+
+      const username = document.getElementById("username").value.trim();
+      const diem = parseInt(document.getElementById("score").value);
+      const nhanxet = document.getElementById("comment").value.trim();
+
+      fetch(`/api/route/${selectedRoute}/ratings`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ diem, nhanxet, username })
+      })
+        .then(res => res.json())
+        .then(resp => {
+          if (resp.success) {
+            alert("Đã thêm đánh giá.");
+            this.reset();
+            loadRatings(selectedRoute);
+          } else {
+            alert("Lỗi thêm đánh giá.");
+          }
+        });
+    });
+
+    // Sửa đánh giá
+    function editRating(id, username, diem, nhanxet) {
+      const newScore = prompt("Điểm mới (1-5):", diem);
+      const newComment = prompt("Nhận xét mới:", nhanxet);
+
+      if (!newScore || !newComment) return;
+      const parsedScore = parseInt(newScore);
+      if (parsedScore < 1 || parsedScore > 5) return alert("Điểm không hợp lệ.");
+
+      fetch(`/api/ratings/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ diem: parsedScore, nhanxet: newComment })
+      })
+        .then(res => res.json())
+        .then(resp => {
+          if (resp.success) {
+            alert("Đã cập nhật.");
+            loadRatings(selectedRoute);
+          } else {
+            alert("Không thể cập nhật.");
+          }
+        });
+    }
+
+    // Xóa đánh giá
+    function deleteRating(id) {
+      if (!confirm("Bạn chắc chắn muốn xóa?")) return;
+
+      fetch(`/api/ratings/${id}`, {
+        method: "DELETE"
+      })
+        .then(res => res.json())
+        .then(resp => {
+          if (resp.success) {
+            alert("Đã xóa.");
+            loadRatings(selectedRoute);
+          } else {
+            alert("Không thể xóa.");
+          }
+        });
+    }
+  </script>
+
+</body>
+</html>

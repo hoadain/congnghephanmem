@@ -1,0 +1,15 @@
+{
+  "route_id": "01",
+  "name": "Tuyến 01 • Tân Long ↔ Phổ Yên",
+  "direction": "Tân Long → Phổ Yên",
+  "hours": "06:00 - 21:00",
+  "fare": "15.000₫",
+  "stops": [
+    {"name": "Tân Long (TP Thái Nguyên)", "lat": 21.6120, "lng": 105.8412},
+    {"name": "Ngã ba Mỏ Bạch", "lat": 21.6055, "lng": 105.8401},
+    {"name": "Đường Lương Ngọc Quyến", "lat": 21.5918, "lng": 105.8523},
+    {"name": "Đảo Đồng Quang", "lat": 21.5960, "lng": 105.8370},
+    {"name": "Bến xe khách trung tâm", "lat": 21.6072, "lng": 105.8425},
+    {"name": "Cầu Đa Phúc (Phổ Yên)", "lat": 21.5885, "lng": 105.8690}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "route_id": "04",
+  "name": "Tuyến 04 • KCN Sông Công ↔ Bến xe trung tâm",
+  "direction": "KCN Sông Công → Bến xe trung tâm",
+  "hours": "06:00 - 20:00",
+  "fare": "8.000₫",
+  "stops": [
+    {"name": "KCN Sông Công", "lat": 21.5132, "lng": 105.9270},
+    {"name": "Cầu Cứng", "lat": 21.5625, "lng": 105.8788},
+    {"name": "Bến xe khách trung tâm", "lat": 21.6072, "lng": 105.8425}
+  ]
+}

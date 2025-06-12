@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>BusMap Thái Nguyên</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    #admin-tools {
+      margin-top: 10px;
+      padding: 10px;
+    }
+
+    .admin-button {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 16px;
+      text-decoration: none;
+      border-radius: 6px;
+      box-shadow: 0 4px 8px rgba(0, 128, 0, 0.3);
+      transition: background-color 0.3s ease;
+      margin-right: 8px;
+    }
+
+    .admin-button:hover {
+      background-color: #45a049;
+    }
+
+    #ratings-section {
+      margin-top: 20px;
+    }
+
+    #ratings-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    #ratings-list li {
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+    }
+
+    #rating-form textarea {
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    #rating-form input,
+    #rating-form button {
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Thanh thông tin người dùng -->
+  <div id="user-info">
+    {% if username %}
+      Xin chào <strong>{{ username }}</strong> (vai trò: {{ role }}) |
+      <a href="{{ url_for('logout') }}">Đăng xuất</a>
+    {% else %}
+      <a href="{{ url_for('auth.login') }}">Đăng nhập</a> |
+      <a href="{{ url_for('auth.register') }}">Đăng ký</a>
+    {% endif %}
+
+    {% if role == 'admin' %}
+      <div id="admin-tools">
+        <a href="{{ url_for('thong_ke_tim_kiem') }}" class="admin-button">📊 Xem thống kê tìm kiếm</a>
+        <a href="{{ url_for('danh_sach_nguoi_dung') }}" class="admin-button">👥 Quản lý tài khoản</a>
+        <a href="{{ url_for('quan_ly_danh_gia') }}" class="admin-button">📝 Quản lý đánh giá</a>
+        <a href="{{ url_for('quan_ly_tuyen_xe') }}" class="admin-button">🚌 Quản lý tuyến xe</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Sidebar hiển thị thông tin tuyến -->
+  <div id="sidebar">
+    <h2 id="route-name">Chọn tuyến xe</h2>
+
+    <select id="route-selector">
+      <option value="">-- Chọn tuyến xe buýt --</option>
+    </select>
+
+    <p><strong>Chiều đi:</strong> <span id="route-direction">---</span></p>
+    <p><strong>Giờ hoạt động:</strong> <span id="route-hours">---</span></p>
+    <p><strong>Giá vé:</strong> <span id="route-fare">---</span></p>
+
+    <h3>Danh sách trạm:</h3>
+    <ul id="stops-list"></ul>
+
+    <!-- 🎯 ĐÁNH GIÁ TUYẾN XE -->
+    <div id="ratings-section">
+      <h3>Đánh giá tuyến xe</h3>
+      <ul id="ratings-list">
+        <li>Chưa có đánh giá nào.</li>
+      </ul>
+
+      {% if username %}
+        <form id="rating-form">
+          <label>Điểm (1-5): <input type="number" id="diem" min="1" max="5" required></label><br>
+          <textarea id="nhanxet" placeholder="Nhận xét của bạn (tùy chọn)" rows="3"></textarea><br>
+          <button type="submit">Gửi đánh giá</button>
+        </form>
+      {% else %}
+        <p><em>Hãy <a href="{{ url_for('auth.login') }}">đăng nhập</a> để đánh giá tuyến xe.</em></p>
+      {% endif %}
+    </div>
+
+    <!-- 🔍 Tìm kiếm tuyến -->
+    <div id="search-box">
+      <h3>Tìm tuyến xe buýt</h3>
+      <form id="search-form">
+        <input type="text" id="start-point" placeholder="Nhập điểm đi" required>
+        <input type="text" id="end-point" placeholder="Nhập điểm đến" required>
+        <button type="submit">Tìm tuyến</button>
+      </form>
+      <ul id="search-results"></ul>
+    </div>
+  </div>
+
+  <!-- Bản đồ -->
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

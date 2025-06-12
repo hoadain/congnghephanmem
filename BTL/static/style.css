@@ -1,0 +1,178 @@
+/* Reset đơn giản */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Toàn bộ trang */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f2fdf5;
+  color: #333;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Thanh người dùng */
+#user-info {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 14px;
+  background-color: #d6f5e3;
+  padding: 8px 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  z-index: 1000;
+}
+
+/* Sidebar bên trái */
+#sidebar {
+  width: 300px;
+  background-color: #e0f7ec;
+  padding: 20px;
+  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  overflow-y: auto;
+  border-right: 1px solid #bde5ce;
+}
+
+/* Các tiêu đề */
+#sidebar h2, #sidebar h3 {
+  color: #2e7d32;
+  margin-bottom: 12px;
+}
+
+/* Dropdown chọn tuyến */
+#route-selector {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #b2dfdb;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Thông tin tuyến */
+#sidebar p {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+/* Danh sách trạm dừng */
+#stops-list {
+  list-style: none;
+  margin-top: 8px;
+}
+
+#stops-list li {
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  background-color: #c8f0da;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#stops-list li:hover {
+  background-color: #b2e5cc;
+}
+
+/* Hộp tìm kiếm */
+#search-box {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #a5d6a7;
+}
+
+/* Form tìm kiếm */
+#search-form input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  border: 1px solid #a5d6a7;
+  background: #ffffff;
+}
+
+#search-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #66bb6a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#search-form button:hover {
+  background-color: #4caf50;
+}
+
+/* Kết quả tìm kiếm */
+#search-results {
+  list-style: none;
+  margin-top: 10px;
+}
+
+#search-results li {
+  padding: 6px 10px;
+  background-color: #d0f2e0;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#search-results li:hover {
+  background-color: #b2dfcb;
+}
+
+/* Bản đồ */
+#map {
+  flex-grow: 1;
+  height: 100vh;
+  z-index: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  #sidebar {
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    border-right: none;
+    border-bottom: 1px solid #bde5ce;
+  }
+#admin-tools {
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.admin-button {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 128, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.admin-button:hover {
+  background-color: #45a049;
+}
+
+  #map {
+    height: calc(100vh - 400px);
+  }
+}

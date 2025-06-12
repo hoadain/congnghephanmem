@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý tài khoản người dùng</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2fff2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #2e7d32;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        table {
+            width: 95%;
+            margin: 0 auto 40px auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            font-size: 16px;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: center;
+            border-bottom: 1px solid #e0f2e9;
+        }
+
+        th {
+            background-color: #a5d6a7;
+            color: #1b5e20;
+        }
+
+        tr:hover {
+            background-color: #f1f8f1;
+        }
+
+        a.button {
+            padding: 8px 14px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        a.button:hover {
+            background-color: #388e3c;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #8bc34a;
+            padding: 10px 24px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .back-link:hover {
+            background-color: #689f38;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Danh sách người dùng</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Vai trò</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.Id }}</td>
+                    <td>{{ user.TenDangNhap }}</td>
+                    <td>{{ user.VaiTro }}</td>
+                    <td>
+                        <a href="{{ url_for('sua_nguoi_dung', user_id=user.Id) }}" class="button">Sửa</a>
+                        <a href="{{ url_for('xoa_nguoi_dung', user_id=user.Id) }}" class="button" onclick="return confirm('Xác nhận xóa tài khoản {{ user.TenDangNhap }}?')">Xóa</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/" class="back-link">&larr; Quay về trang chính</a>
+    </div>
+</body>
+</html>

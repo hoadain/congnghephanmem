@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa tuyến xe</title>
+</head>
+<body>
+    <h2>Sửa thông tin tuyến xe</h2>
+
+    {% if tuyen %}
+    <form method="POST" action="{{ url_for('sua_tuyen', route_id=tuyen.RouteId) }}">
+        <label>Tên tuyến:</label><br>
+        <input type="text" name="TenTuyen" value="{{ tuyen.TenTuyen }}" required><br><br>
+
+        <label>Chiều đi:</label><br>
+        <input type="text" name="ChieuDi" value="{{ tuyen.ChieuDi }}" required><br><br>
+
+        <label>Giờ hoạt động:</label><br>
+        <input type="text" name="GioHoatDong" value="{{ tuyen.GioHoatDong }}" required><br><br>
+
+        <label>Giá vé:</label><br>
+        <input type="number" name="GiaVe" value="{{ tuyen.GiaVe }}" required><br><br>
+
+        <button type="submit">Lưu thay đổi</button>
+    </form>
+    {% else %}
+    <p style="color: red;">Không tìm thấy thông tin tuyến xe để sửa.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('quan_ly_tuyen_xe') }}">Quay lại quản lý tuyến xe</a>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "route_id": "02",
+  "name": "Tuyến 02 • Bến xe trung tâm ↔ ĐH Nông Lâm",
+  "direction": "Bến xe trung tâm → Đại học Nông Lâm",
+  "hours": "06:00 - 21:00",
+  "fare": "6.000₫",
+  "stops": [
+    {"name": "Bến xe khách trung tâm", "lat": 21.6072, "lng": 105.8425},
+    {"name": "Cầu Gia Bảy", "lat": 21.6000, "lng": 105.8485},
+    {"name": "ĐH Nông Lâm", "lat": 21.5981, "lng": 105.8275}
+  ]
+}

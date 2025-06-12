@@ -1,0 +1,12 @@
+{
+  "route_id": "03",
+  "name": "Tuyến 03 • Chợ Thái ↔ Bệnh viện Trung ương",
+  "direction": "Chợ Thái → Bệnh viện TW",
+  "hours": "05:00 - 19:30",
+  "fare": "7.000₫",
+  "stops": [
+    {"name": "Chợ Thái", "lat": 21.5950, "lng": 105.8442},
+    {"name": "Trường THPT Lương Ngọc Quyến", "lat": 21.5915, "lng": 105.8490},
+    {"name": "Bệnh viện Trung ương", "lat": 21.5890, "lng": 105.8535}
+  ]
+}

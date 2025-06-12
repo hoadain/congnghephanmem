@@ -1,0 +1,8 @@
+{
+    "route_id": "T005",
+    "name": "abc123",
+    "direction": "cbd",
+    "hours": "06:00 - 21:00",
+    "fare": "9000",
+    "stops": []
+}

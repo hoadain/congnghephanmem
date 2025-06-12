@@ -1,0 +1,85 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #e0f7ec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.register-container {
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #2e7d32;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  color: #388e3c;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #c8e6c9;
+  border-radius: 8px;
+  background-color: #f9fdfb;
+  transition: border 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: #66bb6a;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #43a047;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #388e3c;
+}
+
+p {
+  text-align: center;
+  margin-top: 16px;
+}
+
+a {
+  color: #2e7d32;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+  .register-container {
+    padding: 20px;
+  }
+}

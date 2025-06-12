@@ -1,0 +1,12 @@
+{
+  "route_id": "05",
+  "name": "Tuyến 05 • Đại học Kỹ thuật Công nghiệp ↔ Ký túc xá Cao đẳng Kinh tế",
+  "direction": "ĐH Kỹ thuật CN → KTX CĐ Kinh tế",
+  "hours": "06:00 - 18:30",
+  "fare": "5.000₫",
+  "stops": [
+    {"name": "ĐH Kỹ thuật Công nghiệp", "lat": 21.5863, "lng": 105.8488},
+    {"name": "Công viên Sông Cầu", "lat": 21.5907, "lng": 105.8442},
+    {"name": "KTX Cao đẳng Kinh tế", "lat": 21.5941, "lng": 105.8380}
+  ]
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng ký</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+</head>
+<body>
+  <div class="register-container">
+    <h2>Đăng ký</h2>
+    <form method="POST">
+      <label for="username">Tên đăng nhập:</label>
+      <input type="text" name="username" id="username" required>
+
+      <label for="password">Mật khẩu:</label>
+      <input type="password" name="password" id="password" required>
+
+      <button type="submit">Đăng ký</button>
+    </form>
+    <p>Đã có tài khoản? <a href="/login">Đăng nhập</a></p>
+  </div>
+</body>
+</html>

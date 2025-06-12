@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý tuyến xe buýt</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #e6f4ea; /* Phông nền xanh lá nhạt */
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #2e7d32; /* Xanh lá đậm */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #43a047; /* Xanh lá tươi */
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f8f4;
+    }
+
+    form {
+      margin: 30px auto;
+      max-width: 600px;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .btn {
+      padding: 8px 12px;
+      margin: 5px 5px 0 0;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .edit-btn {
+      background-color: #ffc107;
+      color: black;
+    }
+
+    .delete-btn {
+      background-color: #e53935;
+      color: white;
+    }
+
+    .add-btn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 10px;
+      margin: 20px auto;
+      border: 1px solid #c3e6cb;
+      border-radius: 5px;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 10px;
+      margin: 20px auto;
+      border: 1px solid #f5c6cb;
+      border-radius: 5px;
+      max-width: 600px;
+      text-align: center;
+    }
+  </style>
+  <script>
+    function confirmDelete(routeId) {
+      if (confirm("Bạn có chắc chắn muốn xoá tuyến xe " + routeId + " không?")) {
+        window.location.href = "/xoa_tuyen/" + routeId;
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <h2>Quản lý tuyến xe buýt</h2>
+
+  <!-- Thông báo -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="{{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Form thêm tuyến mới -->
+  <form method="POST" action="{{ url_for('them_tuyen') }}">
+    <label>Tên tuyến:</label>
+    <input type="text" name="TenTuyen" required>
+
+    <label>Chiều đi:</label>
+    <input type="text" name="ChieuDi" required>
+
+    <label>Giờ hoạt động:</label>
+    <input type="text" name="GioHoatDong" required>
+
+    <label>Giá vé:</label>
+    <input type="number" name="GiaVe" required>
+
+    <button type="submit" class="btn add-btn">Thêm tuyến</button>
+  </form>
+
+  <!-- Danh sách tuyến -->
+  <h3>Danh sách tuyến hiện có</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tên tuyến</th>
+        <th>Chiều đi</th>
+        <th>Giờ hoạt động</th>
+        <th>Giá vé</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for route in danh_sach_tuyen %}
+      <tr>
+        <td>{{ route.RouteId }}</td>
+        <td>{{ route.TenTuyen }}</td>
+        <td>{{ route.ChieuDi }}</td>
+        <td>{{ route.GioHoatDong }}</td>
+        <td>{{ route.GiaVe }}</td>
+        <td>
+          <a href="/sua_tuyen/{{ route.RouteId }}" class="btn edit-btn">Sửa</a>
+          <button onclick="confirmDelete('{{ route.RouteId }}')" class="btn delete-btn">Xoá</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</body>
+</html>
